@@ -1,3 +1,3 @@
 module ysge.info;
 
-const string ysgeVersion = "YSGE Beta 1.0";
+const string ysgeVersion = "YSGE 0.1.0";
