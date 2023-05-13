@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/ysge
+ysge.so
+ysge.dylib
+ysge.dll
+ysge.a
+ysge.lib
+ysge-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst

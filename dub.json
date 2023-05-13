@@ -1,0 +1,13 @@
+{
+	"authors": [
+		"yeti0904"
+	],
+	"copyright": "Copyright © 2023, yeti0904",
+	"dependencies": {
+		"bindbc-sdl": "~>1.3.5"
+	},
+	"description": "A simple game engine",
+	"license": "MIT",
+	"name": "ysge",
+	"target": "library"
+}
