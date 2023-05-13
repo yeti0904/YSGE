@@ -10,6 +10,8 @@ public import ysge.scene;
 public import ysge.types;
 public import ysge.gameObject;
 public import ysge.objects.simpleBox;
+public import ysge.uiBase;
+public import ysge.ui.button;
 
 /// used when something goes wrong in the project
 class ProjectException : Exception {
@@ -23,10 +25,12 @@ class Project {
 	bool          running; /// while true, update functions are called
 	SDL_Window*   window;
 	SDL_Renderer* renderer;
+	TTF_Font*     font;
 	Scene[]       scenes;
 	Scene         currentScene;
 	bool          usingLogicalRes; /// DON'T MODIFY!!!!
 	Vec2!int      logicalRes; /// DON'T MODIFY!!!!
+	Vec2!int      mousePos;
 
 	/// called once at the start
 	abstract void Init();
@@ -61,6 +65,43 @@ class Project {
 
 		if (renderer is null) {
 			throw new ProjectException("Failed to create renderer");
+		}
+	}
+
+	/// initialises the text library
+	void InitText() {
+		SDLTTFSupport support;
+	
+		version (Windows) {
+			support = loadSDLTTF(cast(char*) (dirName(thisExePath()) ~ "/sdl2_ttf.dll"));
+		}
+		else {
+			support = loadSDLTTF();
+		}
+	
+		if (support < SDLTTFSupport.v2_0_12) {
+			throw new ProjectException("Failed to load SDL_TTF library");
+		}
+
+		if (TTF_Init() < 0) {
+			throw new ProjectException("Failed to initialise SDL_TTF");
+		}
+	}
+
+	void LoadFontFile(string path, int pointSize) {
+		font = TTF_OpenFont(toStringz(path), pointSize);
+
+		if (font is null) {
+			throw new ProjectException("Failed to load font");
+		}
+	}
+
+	void LoadFontData(ubyte[] data) {
+		auto rw = SDL_RWFromMem(data.ptr, cast(int) data.length);
+		font = TTF_OpenFontRW(rw, 1, 16);
+
+		if (font is null) {
+			throw new ProjectException("Failed to load font");
 		}
 	}
 
@@ -117,6 +158,10 @@ class Project {
 			throw new ProjectException("Scene not set");
 		}
 
+		if (font is null) {
+			throw new ProjectException("Font not loaded");
+		}
+
 		while (running) {
 			currentScene.UpdateObjects(this);
 			currentScene.Update(this);
@@ -125,12 +170,24 @@ class Project {
 
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
-				if (e.type == SDL_QUIT) {
-					running = false;
-					return;
+				switch (e.type) {
+					case SDL_QUIT: {
+						running = false;
+						return;
+					}
+					case SDL_MOUSEMOTION: {
+						mousePos = Vec2!int(e.motion.x, e.motion.y);
+						break;
+					}
+					default: {
+						if (currentScene.HandleUIEvent(this, e)) {
+							continue;
+						}
+					
+						currentScene.HandleEvent(this, e);
+						break;
+					}
 				}
-			
-				currentScene.HandleEvent(this, e);
 			}
 		}
 	}

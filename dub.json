@@ -9,5 +9,7 @@
 	"description": "A simple game engine",
 	"license": "MIT",
 	"name": "ysge",
-	"target": "library"
+	"versions": [
+		"SDL_TTF_2012"
+	]
 }

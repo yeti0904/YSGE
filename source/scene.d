@@ -6,6 +6,7 @@ import ysge.project;
 /// individual scene containing objects
 class Scene {
 	GameObject[] objects;
+	UIElement[]  ui;
 	SDL_Color    bg;
 	Vec2!int     camera;
 	bool         cameraFollowsObject;
@@ -36,9 +37,14 @@ class Scene {
 		cameraFollow        = null;
 	}
 
-	// adds a game object to the scene's object array
+	/// adds a game object to the scene's object array
 	void AddObject(GameObject object) {
 		objects ~= object;
+	}
+
+	/// adds a UI element to the scene
+	void AddUI(UIElement element) {
+		ui ~= element;
 	}
 
 	/// makes the camera follow an object if enabled
@@ -62,6 +68,17 @@ class Scene {
 		}
 	}
 
+	/// sends event to UI elements
+	/// should not be called by the user
+	bool HandleUIEvent(Project parent, SDL_Event e) {
+		foreach (ref element ; ui) {
+			if (element.HandleEvent(parent, e)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/// render the scene, should not be called by the user
 	void Render(Project parent) {
 		SDL_SetRenderDrawColor(parent.renderer, bg.r, bg.g, bg.b, bg.a);
@@ -71,6 +88,10 @@ class Scene {
 			object.Render(parent);
 		}
 		
+		foreach (ref element ; ui) {
+			element.Render(parent);
+		}
+
 		SDL_RenderPresent(parent.renderer);
 	}
 }
