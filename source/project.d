@@ -1,3 +1,4 @@
+/// main YSGE module containing everything you need to make a game
 module ysge.project;
 
 import std.file;
@@ -10,12 +11,14 @@ public import ysge.types;
 public import ysge.gameObject;
 public import ysge.objects.simpleBox;
 
+/// used when something goes wrong in the project
 class ProjectException : Exception {
 	this(string msg, string file = __FILE__, size_t line = __LINE__) {
 		super(msg, file, line);
 	}
 }
 
+/// main project class used for the game as a whole
 class Project {
 	bool          running; /// while true, update functions are called
 	SDL_Window*   window;

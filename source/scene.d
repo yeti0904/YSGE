@@ -1,7 +1,9 @@
+/// contains the Scene class
 module ysge.scene;
 
 import ysge.project;
 
+/// individual scene containing objects
 class Scene {
 	GameObject[] objects;
 	SDL_Color    bg;

@@ -1,3 +1,4 @@
+/// contains types used by the engine
 module ysge.types;
 
 import std.math;

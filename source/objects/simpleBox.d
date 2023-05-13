@@ -1,7 +1,9 @@
+/// contains the simple box object class
 module ysge.objects.simpleBox;
 
 import ysge.project;
 
+/// box object with AABB collision
 class SimpleBox : GameObject {
 	this(SDL_Rect box, SDL_Color colour) {
 		super(box, colour);

@@ -1,13 +1,16 @@
+/// contains the base class for game objects
 module ysge.gameObject;
 
 import std.stdio;
 import ysge.project;
 
+/// whether the object will render with a colour or a texture
 enum RenderType {
 	Colour,
 	Texture
 }
 
+/// a texture or a colour that will be used for rendering this object
 union RenderValue {
 	SDL_Color    colour;
 	SDL_Texture* texture;
@@ -21,6 +24,7 @@ union RenderValue {
 	}
 }
 
+/// contains physics info
 struct Physics {
 	Vec2!int velocity;
 	bool     drag;
@@ -28,6 +32,7 @@ struct Physics {
 	Vec2!int gravity;
 }
 
+/// base class for objects in a scene
 class GameObject {
 	SDL_Rect    box;
 	bool        physicsOn;
