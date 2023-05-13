@@ -11,5 +11,6 @@
 	"name": "ysge",
 	"versions": [
 		"SDL_TTF_2012"
-	]
+	],
+	"targetType": "library"
 }

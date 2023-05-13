@@ -28,6 +28,21 @@ class GameScene : Scene {
 				SDL_Rect(350, 350, 300, 20), SDL_Color(0, 255, 0)
 			)
 		);
+
+		// make ui
+		Button respawn = new Button();
+
+		void RespawnOnClick(Project project, Button button) {
+			player.box = SDL_Rect(10, 10, 50, 50);
+		}
+
+		respawn.label       = "Respawn";
+		respawn.labelColour = SDL_Color(0, 0, 0, 255);
+		respawn.rect        = SDL_Rect(0, 0, 100, 50);
+		respawn.outline     = SDL_Color(255, 255, 255, 255);
+		respawn.fill        = SDL_Color(0, 255, 0, 255);
+		respawn.onClick     = &RespawnOnClick;
+		AddUI(respawn);
 	}
 	
 	override void Update(Project parent) {
@@ -59,6 +74,9 @@ class Game : Project {
 	override void Init() {
 		InitWindow("Game", 640, 480);
 		SetResolution(640, 480);
+
+		InitText();
+		LoadFontFile("font.ttf", 16);
 
 		AddScene(new GameScene());
 
