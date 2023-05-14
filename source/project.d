@@ -11,6 +11,7 @@ public import ysge.types;
 public import ysge.gameObject;
 public import ysge.objects.simpleBox;
 public import ysge.uiBase;
+public import ysge.ui.text;
 public import ysge.ui.button;
 
 /// used when something goes wrong in the project
@@ -31,6 +32,7 @@ class Project {
 	bool          usingLogicalRes; /// DON'T MODIFY!!!!
 	Vec2!int      logicalRes; /// DON'T MODIFY!!!!
 	Vec2!int      mousePos;
+	ulong         frames; /// how many frames have passed since the game was started
 
 	/// called once at the start
 	abstract void Init();
@@ -163,6 +165,8 @@ class Project {
 		}
 
 		while (running) {
+			++ frames;
+		
 			currentScene.UpdateObjects(this);
 			currentScene.Update(this);
 			currentScene.UpdateCamera(this);

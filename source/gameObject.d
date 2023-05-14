@@ -66,8 +66,10 @@ class GameObject {
 		render     = RenderValue(texture);
 	}
 
-	/// checks if it collides with another object
-	/// returns false for GameObject
+	/**
+	* checks if it collides with another object
+	* returns false for GameObject
+	*/
 	bool CollidesWith(GameObject other) {
 		return false;
 	}
@@ -128,8 +130,10 @@ class GameObject {
 		return;
 	}
 
-	/// move the box right while checking collision
-	/// returns whether it did move
+	/**
+	* move the box right while checking collision
+	* returns whether it did move
+	*/
 	bool MoveRight(Scene scene, int pixels) {
 		int old  = box.x;
 		box.x   += pixels;
@@ -148,7 +152,10 @@ class GameObject {
 		return true;
 	}
 
-	/// move the box left while checking collision
+	/**
+	* move the box left while checking collision
+	* returns whether it did move
+	*/
 	bool MoveLeft(Scene scene, int pixels) {
 		int old  = box.x;
 		box.x   -= pixels;
@@ -167,7 +174,10 @@ class GameObject {
 		return true;
 	}
 
-	/// move the box up while checking collision
+	/**
+	* move the box up while checking collision
+	* returns whether it did move
+	*/
 	bool MoveUp(Scene scene, int pixels) {
 		int old  = box.y;
 		box.y   -= pixels;
@@ -186,7 +196,10 @@ class GameObject {
 		return true;
 	}
 
-	/// move the box down while checking collision
+	/**
+	* move the box down while checking collision
+	* returns whether it did move
+	*/
 	bool MoveDown(Scene scene, int pixels) {
 		int old  = box.y;
 		box.y   += pixels;
@@ -205,8 +218,10 @@ class GameObject {
 		return true;
 	}
 	
-	/// renders the object
-	/// should not be called by user
+	/**
+	* renders the object
+	* should not be called by user
+	*/
 	void Render(Project parent) {
 		SDL_Rect screenBox  = box;
 		screenBox.x        -= parent.currentScene.camera.x;

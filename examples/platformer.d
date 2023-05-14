@@ -1,7 +1,9 @@
+import std.math;
 import std.stdio;
 import ysge.project;
 
 SimpleBox player;
+Text      title;
 
 class GameScene : Scene {
 	override void Init(Project parent) {
@@ -36,16 +38,24 @@ class GameScene : Scene {
 			player.box = SDL_Rect(10, 10, 50, 50);
 		}
 
-		respawn.label       = "Respawn";
+		respawn.SetLabel("Respawn");
 		respawn.labelColour = SDL_Color(0, 0, 0, 255);
 		respawn.rect        = SDL_Rect(0, 0, 100, 50);
 		respawn.outline     = SDL_Color(255, 255, 255, 255);
 		respawn.fill        = SDL_Color(0, 255, 0, 255);
 		respawn.onClick     = &RespawnOnClick;
 		AddUI(respawn);
+
+		title = new Text();
+		title.SetText("Example platformer game");
+		title.pos    = Vec2!int(120, 50);
+		title.colour = SDL_Color(255, 255, 255, 255);
+		AddUI(title);
 	}
 	
 	override void Update(Project parent) {
+		title.pos.y += cast(int) (sin(cast(float) parent.frames / 5) * 10);
+
 		if (parent.KeyPressed(SDL_SCANCODE_A)) {
 			player.MoveLeft(this, 5);
 		}

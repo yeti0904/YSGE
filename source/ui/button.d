@@ -8,13 +8,22 @@ alias ButtonOnClick = void delegate(Project, Button);
 
 /// button UI element
 class Button : UIElement {
-	string        label; /// the text that displays on the button
-	SDL_Texture*  labelTexture;
-	ButtonOnClick onClick; /// called when the button is clicked
-	SDL_Rect      rect; /// the rectangle the button will be rendered in
-	SDL_Color     fill; /// the background colour of the button
-	SDL_Color     outline; /// the colour of the button outline
-	SDL_Color     labelColour; /// the colour of the label text
+	private string       label; /// the text that displays on the button
+	private SDL_Texture* labelTexture;
+	ButtonOnClick        onClick; /// called when the button is clicked
+	SDL_Rect             rect; /// the rectangle the button will be rendered in
+	SDL_Color            fill; /// the background colour of the button
+	SDL_Color            outline; /// the colour of the button outline
+	SDL_Color            labelColour; /// the colour of the label text
+
+	/// sets the button's label
+	void SetLabel(string newLabel) {
+		if (newLabel != label) {
+			labelTexture = null;
+		}
+
+		label = newLabel;
+	}
 
 	override bool HandleEvent(Project project, SDL_Event e) {
 		switch (e.type) {

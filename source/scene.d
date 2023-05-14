@@ -47,8 +47,10 @@ class Scene {
 		ui ~= element;
 	}
 
-	/// makes the camera follow an object if enabled
-	/// should not be called by the user
+	/**
+	* makes the camera follow an object if enabled
+	* should not be called by the user
+	*/
 	void UpdateCamera(Project parent) {
 		if (cameraFollowsObject) {
 			auto     screenRes = parent.GetResolution();
@@ -60,16 +62,20 @@ class Scene {
 		}
 	}
 
-	/// calls the update function of all objects in the scene
-	/// should not be called by the user
+	/**
+	* calls the update function of all objects in the scene
+	* should not be called by the user
+	*/
 	void UpdateObjects(Project parent) {
 		foreach (ref object ; objects) {
 			object.Update(parent);
 		}
 	}
 
-	/// sends event to UI elements
-	/// should not be called by the user
+	/**
+	* sends event to UI elements
+	* should not be called by the user
+	*/
 	bool HandleUIEvent(Project parent, SDL_Event e) {
 		foreach (ref element ; ui) {
 			if (element.HandleEvent(parent, e)) {
