@@ -4,12 +4,13 @@ import ysge.project;
 
 SimpleBox player;
 Text      title;
+TileMap   map;
 
 class GameScene : Scene {
 	override void Init(Project parent) {
 		AddObject( // player
 			new SimpleBox(
-				SDL_Rect(10, 10, 50, 50), SDL_Color(255, 255, 255)
+				SDL_Rect(50, 0, 50, 50), SDL_Color(255, 255, 255)
 			)
 		);
 		player = cast(SimpleBox) objects[$ - 1];
@@ -19,23 +20,62 @@ class GameScene : Scene {
 		player.physics.gravity   = Vec2!int(0, 1);
 
 		CameraFollowObject(player);
-		
-		AddObject(
-			new SimpleBox(
-				SDL_Rect(0, 400, 300, 20), SDL_Color(0, 255, 0)
-			)
+
+		map = new TileMap(Vec2!ulong(128, 128));
+		AddObject(map);
+
+		map.tileDefs[0] = TileDef(
+			RenderType.Colour,
+			RenderValue(SDL_Color(0, 0, 0, 0)),
+			false
 		);
-		AddObject(
-			new SimpleBox(
-				SDL_Rect(350, 350, 300, 20), SDL_Color(0, 255, 0)
-			)
+		map.tileDefs[1] = TileDef(
+			RenderType.Colour,
+			RenderValue(SDL_Color(0, 255, 0, 255)),
+			true
 		);
+
+		map.FromIDs(
+			[
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1],
+				[1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+			]
+		);
+
+		map.tileSize = Vec2!int(50, 50);
 
 		// make ui
 		Button respawn = new Button();
 
 		void RespawnOnClick(Project project, Button button) {
-			player.box = SDL_Rect(10, 10, 50, 50);
+			player.box = SDL_Rect(50, 0, 50, 50);
 		}
 
 		respawn.SetLabel("Respawn");
@@ -83,7 +123,7 @@ enum Scenes {
 class Game : Project {
 	override void Init() {
 		InitWindow("Game", 640, 480);
-		SetResolution(640, 480);
+		//SetResolution(640, 480);
 
 		InitText();
 		LoadFontFile("font.ttf", 16);

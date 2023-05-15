@@ -10,7 +10,7 @@ class Scene {
 	SDL_Color    bg;
 	Vec2!int     camera;
 	bool         cameraFollowsObject;
-	GameObject   cameraFollow;
+	Vec2!int*    cameraFollow;
 
 	/// called when this scene is set as the project's current scene
 	abstract void Init(Project parent);
@@ -20,15 +20,9 @@ class Scene {
 	abstract void HandleEvent(Project parent, SDL_Event e);
 
 	/// makes the camera follow an object
-	void CameraFollowObject(GameObject obj) {
+	void CameraFollowObject(SimpleBox obj) {
 		cameraFollowsObject = true;
-		cameraFollow        = obj;
-	}
-
-	/// makes the camera follow an object by index
-	void CameraFollowObject(size_t index) {
-		cameraFollowsObject = true;
-		cameraFollow        = objects[index];
+		cameraFollow        = cast(Vec2!int*) &obj.box;
 	}
 
 	/// stops the camera from following an object
@@ -54,8 +48,8 @@ class Scene {
 	void UpdateCamera(Project parent) {
 		if (cameraFollowsObject) {
 			auto     screenRes = parent.GetResolution();
-			Vec2!int pos       = Vec2!int(cameraFollow.box.x, cameraFollow.box.y);
-			Vec2!int size      = Vec2!int(cameraFollow.box.x, cameraFollow.box.y);
+			Vec2!int pos       = Vec2!int(cameraFollow.x, cameraFollow.y);
+			Vec2!int size      = Vec2!int(cameraFollow.x, cameraFollow.y);
 
 			camera.x = pos.x - (screenRes.x / 2);
 			camera.y = pos.y - (screenRes.y / 2);

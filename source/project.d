@@ -9,6 +9,7 @@ public import bindbc.sdl;
 public import ysge.scene;
 public import ysge.types;
 public import ysge.gameObject;
+public import ysge.objects.tileMap;
 public import ysge.objects.simpleBox;
 public import ysge.uiBase;
 public import ysge.ui.text;
