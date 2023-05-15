@@ -106,17 +106,19 @@ class SimpleBox : GameObject {
 	* returns whether it did move
 	*/
 	bool MoveRight(Scene scene, int pixels) {
-		int old  = box.x;
-		box.x   += pixels;
+		for (int i = 0; i < pixels; ++ i) {
+			int old = box.x;
+			++ box.x;
 
-		foreach (ref object ; scene.objects) {
-			if (object is this) {
-				continue;
-			}
+			foreach (ref object ; scene.objects) {
+				if (object is this) {
+					continue;
+				}
 
-			if (object.CollidesWith(this)) {
-				box.x = old;
-				return false;
+				if (object.CollidesWith(this)) {
+					box.x = old;
+					return false;
+				}
 			}
 		}
 
@@ -128,17 +130,19 @@ class SimpleBox : GameObject {
 	* returns whether it did move
 	*/
 	bool MoveLeft(Scene scene, int pixels) {
-		int old  = box.x;
-		box.x   -= pixels;
+		for (int i = 0; i < pixels; ++ i) {
+			int old = box.x;
+			+--box.x;
 
-		foreach (ref object ; scene.objects) {
-			if (object is this) {
-				continue;
-			}
+			foreach (ref object ; scene.objects) {
+				if (object is this) {
+					continue;
+				}
 
-			if (object.CollidesWith(this)) {
-				box.x = old;
-				return false;
+				if (object.CollidesWith(this)) {
+					box.x = old;
+					return false;
+				}
 			}
 		}
 
@@ -150,17 +154,19 @@ class SimpleBox : GameObject {
 	* returns whether it did move
 	*/
 	bool MoveUp(Scene scene, int pixels) {
-		int old  = box.y;
-		box.y   -= pixels;
+		for (int i = 0; i < pixels; ++ i) {
+			int old = box.y;
+			-- box.y;
 
-		foreach (ref object ; scene.objects) {
-			if (object is this) {
-				continue;
-			}
+			foreach (ref object ; scene.objects) {
+				if (object is this) {
+					continue;
+				}
 
-			if (object.CollidesWith(this)) {
-				box.y = old;
-				return false;
+				if (object.CollidesWith(this)) {
+					box.y = old;
+					return false;
+				}
 			}
 		}
 
@@ -172,17 +178,19 @@ class SimpleBox : GameObject {
 	* returns whether it did move
 	*/
 	bool MoveDown(Scene scene, int pixels) {
-		int old  = box.y;
-		box.y   += pixels;
+		for (int i = 0; i < pixels; ++ i) {
+			int old = box.y;
+			++ box.y;
 
-		foreach (ref object ; scene.objects) {
-			if (object is this) {
-				continue;
-			}
+			foreach (ref object ; scene.objects) {
+				if (object is this) {
+					continue;
+				}
 
-			if (object.CollidesWith(this)) {
-				box.y = old;
-				return false;
+				if (object.CollidesWith(this)) {
+					box.y = old;
+					return false;
+				}
 			}
 		}
 
