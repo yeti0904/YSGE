@@ -54,6 +54,7 @@ struct Cell {
 
 /// text screen object class
 class Terminal : UIElement {
+	Vec2!int          pos;
 	Cell[][]          cells;
 	Vec2!int          cellSize;
 	SDL_Color[]       palette;
@@ -279,8 +280,8 @@ class Terminal : UIElement {
 		foreach (i, ref line ; cells) {
 			foreach (j, ch ; line) {
 				auto rect = SDL_Rect(
-					cast(int) j * cellSize.x,
-					cast(int) i * cellSize.y,
+					(cast(int) j * cellSize.x) + pos.x,
+					(cast(int) i * cellSize.y) + pos.y,
 					cellSize.x,
 					cellSize.y
 				);
