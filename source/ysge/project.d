@@ -131,6 +131,16 @@ class Project {
 		logicalRes      = Vec2!int(w, h);
 	}
 
+	/// sets window size
+	void SetWindowSize(uint w, uint h) {
+		SDL_SetWindowSize(window, cast(int) w, cast(int) h);
+	}
+
+	/// changes whether the window is resizeable or not
+	void SetWindowResizable(bool resizable) {
+		SDL_SetWindowResizable(window, resizable? SDL_TRUE : SDL_FALSE);
+	}
+
 	/// gets the directory the game executable is in
 	string GetGameDirectory() {
 		return dirName(thisExePath());
