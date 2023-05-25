@@ -41,7 +41,7 @@ class Project {
 	abstract void Init();
 
 	/// creates the window
-	void InitWindow(string name, int w, int h) {
+	void InitWindow(string name, int w, int h, bool resizable) {
 		SDLSupport support;
 
 		version (Windows) {
@@ -54,10 +54,16 @@ class Project {
 		if (support != sdlSupport) {
 			throw new ProjectException("Failed to load SDL");
 		}
+
+		int flags = 0;
+
+		if (resizable) {
+			flags |= SDL_WINDOW_RESIZABLE;
+		}
 	
 		window = SDL_CreateWindow(
 			toStringz(name), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-			w, h, SDL_WINDOW_RESIZABLE
+			w, h, flags
 		);
 
 		if (window is null) {
@@ -135,12 +141,7 @@ class Project {
 	void SetWindowSize(uint w, uint h) {
 		SDL_SetWindowSize(window, cast(int) w, cast(int) h);
 	}
-
-	/// changes whether the window is resizeable or not
-	void SetWindowResizable(bool resizable) {
-		SDL_SetWindowResizable(window, resizable? SDL_TRUE : SDL_FALSE);
-	}
-
+	
 	/// gets the directory the game executable is in
 	string GetGameDirectory() {
 		return dirName(thisExePath());

@@ -301,6 +301,8 @@ class Terminal : UIElement {
 						continue;
 					}
 
+					SDL_SetTextureColorMod(characters[ch.ch], fg.r, fg.g, fg.b);
+
 					SDL_RenderCopy(
 						parent.renderer, characters[ch.ch], null, &rect
 					);
