@@ -6,6 +6,7 @@ import std.path;
 import std.string;
 
 public import bindbc.sdl;
+public import ysge.util;
 public import ysge.scene;
 public import ysge.types;
 public import ysge.gameObject;
@@ -14,6 +15,7 @@ public import ysge.objects.simpleBox;
 public import ysge.uiBase;
 public import ysge.ui.text;
 public import ysge.ui.button;
+public import ysge.ui.terminal;
 
 /// used when something goes wrong in the project
 class ProjectException : Exception {

@@ -2,6 +2,7 @@
 module ysge.scene;
 
 import ysge.project;
+public import ysge.objects.simpleBox;
 
 /// individual scene containing objects
 class Scene {
