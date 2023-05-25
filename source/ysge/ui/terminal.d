@@ -53,7 +53,7 @@ struct Cell {
 }
 
 /// text screen object class
-class TextScreen : UIElement {
+class Terminal : UIElement {
 	Cell[][]          cells;
 	Vec2!int          cellSize;
 	SDL_Color[]       palette;
