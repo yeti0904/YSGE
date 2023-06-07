@@ -10,6 +10,7 @@
 	"license": "MIT",
 	"name": "ysge",
 	"versions": [
-		"SDL_TTF_2012"
+		"SDL_TTF_2012",
+		"SDL_Image_205"
 	]
 }

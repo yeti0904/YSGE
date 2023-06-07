@@ -76,22 +76,37 @@ class Project {
 	}
 
 	/// initialises the text library
-	void InitText() {
-		SDLTTFSupport support;
+	void InitLibs() {
+		// SDL_TTF
+		SDLTTFSupport supportTTF;
 	
 		version (Windows) {
-			support = loadSDLTTF(cast(char*) (dirName(thisExePath()) ~ "/sdl2_ttf.dll"));
+			supportTTF = loadSDLTTF(
+				cast(char*) (dirName(thisExePath()) ~ "/sdl2_ttf.dll")
+			);
 		}
 		else {
-			support = loadSDLTTF();
+			supportTTF = loadSDLTTF();
 		}
 	
-		if (support < SDLTTFSupport.v2_0_12) {
+		if (supportTTF < SDLTTFSupport.v2_0_12) {
 			throw new ProjectException("Failed to load SDL_TTF library");
 		}
 
 		if (TTF_Init() < 0) {
 			throw new ProjectException("Failed to initialise SDL_TTF");
+		}
+
+		// SDL_Image
+		auto supportIMG = loadSDLImage();
+
+		if (supportIMG < SDLImageSupport.v2_0_0) {
+			throw new ProjectException("Failed to load SDL_Image library");
+		}
+
+		int imgFlags = IMG_INIT_PNG;
+		if (IMG_Init(imgFlags) != imgFlags) {
+			throw new ProjectException("Failed to initialise SDL_Image");
 		}
 	}
 
@@ -165,6 +180,41 @@ class Project {
 	void SetScene(size_t index) {
 		currentScene = scenes[index];
 		currentScene.Init(this);
+	}
+
+	/// loads a texture from a file
+	SDL_Texture* LoadTextureFromFile(string fileName) {
+		auto surface = IMG_Load(cast(char*) fileName.toStringz());
+
+		if (surface is null) {
+			throw new ProjectException("Failed to load texture");
+		}
+
+		auto texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+		if (texture is null) {
+			throw new ProjectException("Failed to load texture");
+		}
+
+		return texture;
+	}
+
+	/// loads a texture from raw file data
+	SDL_Texture* LoadTextureFromData(ref ubyte[] data) {
+		auto rw      = SDL_RWFromMem(data.ptr, cast(int) data.length);
+		auto surface = IMG_Load_RW(rw, 1);
+		
+		if (surface is null) {
+			throw new ProjectException("Failed to load texture");
+		}
+
+		auto texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+		if (texture is null) {
+			throw new ProjectException("Failed to load texture");
+		}
+
+		return texture;
 	}
 
 	/// runs the game

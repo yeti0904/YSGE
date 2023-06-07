@@ -12,11 +12,14 @@ struct Tile {
 	}
 }
 
+/// tile type definition
 struct TileDef {
-	RenderType  renderType;
-	RenderValue render;
-	bool        hasCollision;
+	RenderType  renderType; /// whether it renders as a colour or texture
+	RenderValue render; /// what it uses to render
+	bool        hasCollision; /// whether it can collide with other boxes
 }
+
+
 
 /// tile map object with fast AABB collision
 class TileMap : GameObject {
