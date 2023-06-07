@@ -26,6 +26,10 @@ class Text : UIElement {
 		
 		CreateTexture(project);
 		SDL_QueryTexture(texture, null, null, &ret.x, &ret.y);
+		ret = Vec2!int(
+			cast(int) (ret.CastTo!float().x * scale),
+			cast(int) (ret.CastTo!float().x * scale)
+		);
 		return ret;
 	}
 
