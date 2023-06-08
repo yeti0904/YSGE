@@ -173,12 +173,14 @@ class Project {
 	/// sets the current scene to a scene from the project scene array
 	void SetScene(Scene scene) {
 		currentScene = scene;
+		currentScene.Setup();
 		currentScene.Init(this);
 	}
 
 	/// sets the current scene to a scene from the project scene array
 	void SetScene(size_t index) {
 		currentScene = scenes[index];
+		currentScene.Setup();
 		currentScene.Init(this);
 	}
 

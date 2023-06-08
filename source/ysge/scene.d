@@ -43,6 +43,15 @@ class Scene {
 	}
 
 	/**
+	* sets up a scene
+	* should not be called by the user
+	*/
+	void Setup() {
+		objects = [];
+		ui      = [];
+	}
+
+	/**
 	* makes the camera follow an object if enabled
 	* should not be called by the user
 	*/
