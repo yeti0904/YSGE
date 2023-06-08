@@ -19,14 +19,13 @@ struct TileDef {
 	bool        hasCollision; /// whether it can collide with other boxes
 }
 
-
-
 /// tile map object with fast AABB collision
 class TileMap : GameObject {
 	Tile*[][]    tiles;
 	Vec2!int     tileSize;
 	TileDef[int] tileDefs;
 	Vec2!int     pos;
+	bool         doCollision = true; /// whether collision should be checked at all
 
 	/// initialises the tile map
 	this(Vec2!ulong size) {
@@ -61,6 +60,10 @@ class TileMap : GameObject {
 	* should not be called by user
 	*/
 	override bool CollidesWith(SimpleBox other) {
+		if (!doCollision) {
+			return false;
+		}
+	
 		Vec2!int posOnMap  = Vec2!int(other.box.x, other.box.y);
 		posOnMap.x        -= pos.x;
 		posOnMap.y        -= pos.y;
