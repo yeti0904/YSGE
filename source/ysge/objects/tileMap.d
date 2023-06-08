@@ -47,6 +47,17 @@ class TileMap : GameObject {
 		}
 	}
 
+	/// sets the map size (resets all tiles)
+	void SetSize(Vec2!ulong size) {
+		tiles = new Tile*[][](size.y, size.x);
+
+		foreach (ref line ; tiles) {
+			foreach (ref tile ; line) {
+				tile = new Tile(0);
+			}
+		}
+	}
+
 	/**
 	* updates the tile map
 	* should not be called by user
