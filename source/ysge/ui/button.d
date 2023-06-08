@@ -15,6 +15,7 @@ class Button : UIElement {
 	SDL_Color            fill; /// the background colour of the button
 	SDL_Color            outline; /// the colour of the button outline
 	SDL_Color            outlineHover; /// the colour of the button outline when the cursor is hovering on it
+	SDL_Color            fillHover; /// the colour of the button fill when the cursor is hovering on it
 	SDL_Color            labelColour; /// the colour of the label text
 
 	/// sets the button's label
@@ -26,7 +27,7 @@ class Button : UIElement {
 		label = newLabel;
 	}
 
-	/// creates a copy
+	/// copies this UI element to a new class instance
 	Button CreateCopy() {
 		Button ret = new Button();
 		
@@ -41,9 +42,18 @@ class Button : UIElement {
 		return ret;
 	}
 
+	/// checks if a position is inside the button
+	bool OnButton(Vec2!int pos) {
+		return (
+			(pos.x > rect.x) &&
+			(pos.y > rect.y) &&
+			(pos.x < rect.x + rect.w) &&
+			(pos.y < rect.y + rect.h)
+		);
+	}
+
 	override bool HandleEvent(Project project, SDL_Event e) {
 		switch (e.type) {
-			
 			case SDL_MOUSEBUTTONDOWN: {
 				if (e.button.button != SDL_BUTTON_LEFT) {
 					return false;
@@ -51,12 +61,7 @@ class Button : UIElement {
 
 				auto mouse = project.mousePos;
 
-				if (
-					(mouse.x > rect.x) &&
-					(mouse.y > rect.y) &&
-					(mouse.x < rect.x + rect.w) &&
-					(mouse.y < rect.y + rect.h)
-				) {
+				if (OnButton(mouse)) {
 					onClick(project, this);
 				}
 				else {
@@ -71,10 +76,17 @@ class Button : UIElement {
 	}
 
 	override void Render(Project project) {
-		SDL_SetRenderDrawColor(project.renderer, fill.r, fill.g, fill.b, fill.a);
+		auto fillColour    = OnButton(project.mousePos)? fillHover : fill;
+		auto outlineColour = OnButton(project.mousePos)? outlineHover : outline;
+	
+		SDL_SetRenderDrawColor(
+			project.renderer, fillColour.r, fillColour.g, fillColour.b,
+			fillColour.a
+		);
 		SDL_RenderFillRect(project.renderer, &rect);
 		SDL_SetRenderDrawColor(
-			project.renderer, outline.r, outline.g, outline.b, outline.a
+			project.renderer, outlineColour.r, outlineColour.g, outlineColour.b,
+			outlineColour.a
 		);
 		SDL_RenderDrawRect(project.renderer, &rect);
 

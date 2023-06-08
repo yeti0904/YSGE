@@ -119,6 +119,7 @@ class Terminal : UIElement {
 		}
 	}
 
+	/// copies this UI element to a new class instance
 	Terminal CreateCopy(Project parent) {
 		auto ret = new Terminal(parent);
 

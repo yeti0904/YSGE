@@ -11,6 +11,7 @@ class Text : UIElement {
 	Vec2!int             pos;
 	float                scale = 1.0;
 
+	/// copies this UI element to a new class instance
 	Text CreateCopy() {
 		auto ret = new Text();
 
