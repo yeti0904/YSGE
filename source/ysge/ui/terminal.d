@@ -119,6 +119,18 @@ class Terminal : UIElement {
 		}
 	}
 
+	Terminal CreateCopy(Project parent) {
+		auto ret = new Terminal(parent);
+
+		ret.pos        = pos;
+		ret.cells      = cells;
+		ret.cellSize   = cellSize;
+		ret.palette    = palette;
+		ret.characters = characters;
+
+		return ret;
+	}
+
 	/// returns the size of the text buffer
 	Vec2!size_t GetSize() {
 		return Vec2!size_t(cells[0].length, cells.length);

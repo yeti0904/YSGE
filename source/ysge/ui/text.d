@@ -11,6 +11,17 @@ class Text : UIElement {
 	Vec2!int             pos;
 	float                scale = 1.0;
 
+	Text CreateCopy() {
+		auto ret = new Text();
+
+		ret.SetText(text);
+		ret.colour = colour;
+		ret.pos    = pos;
+		ret.scale  = scale;
+
+		return ret;
+	}
+
 	/// sets the text that is rendered
 	void SetText(string newText) {
 		if (text != newText) {

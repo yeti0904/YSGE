@@ -14,6 +14,7 @@ class Button : UIElement {
 	SDL_Rect             rect; /// the rectangle the button will be rendered in
 	SDL_Color            fill; /// the background colour of the button
 	SDL_Color            outline; /// the colour of the button outline
+	SDL_Color            outlineHover; /// the colour of the button outline when the cursor is hovering on it
 	SDL_Color            labelColour; /// the colour of the label text
 
 	/// sets the button's label
@@ -25,8 +26,24 @@ class Button : UIElement {
 		label = newLabel;
 	}
 
+	/// creates a copy
+	Button CreateCopy() {
+		Button ret = new Button();
+		
+		ret.SetLabel(label);
+		ret.onClick      = onClick;
+		ret.rect         = rect;
+		ret.fill         = fill;
+		ret.outline      = outline;
+		ret.outlineHover = outlineHover;
+		ret.labelColour  = labelColour;
+
+		return ret;
+	}
+
 	override bool HandleEvent(Project project, SDL_Event e) {
 		switch (e.type) {
+			
 			case SDL_MOUSEBUTTONDOWN: {
 				if (e.button.button != SDL_BUTTON_LEFT) {
 					return false;
