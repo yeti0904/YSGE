@@ -48,6 +48,18 @@ class TileMap : GameObject {
 		}
 	}
 
+	/// returns the map size
+	Vec2!ulong GetSize() {
+		if (tiles.length == 0) {
+			return Vec2!ulong(0, 0);
+		}
+
+		return Vec2!ulong(
+			tiles[0].length,
+			tiles.length
+		);
+	}
+
 	/// sets the map size (resets all tiles)
 	void SetSize(Vec2!ulong size) {
 		tiles = new Tile*[][](size.y, size.x);
