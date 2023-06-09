@@ -24,6 +24,12 @@ union RenderValue {
 	}
 }
 
+/// properties used for rendering
+struct RenderProps {
+	bool     doCrop; /// if the texture should be cropped
+	SDL_Rect crop; /// the area that will be rendered
+}
+
 /// base class for objects in a scene
 class GameObject {
 	abstract void Update(Project parent);

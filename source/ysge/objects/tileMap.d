@@ -16,6 +16,7 @@ struct Tile {
 struct TileDef {
 	RenderType  renderType; /// whether it renders as a colour or texture
 	RenderValue render; /// what it uses to render
+	RenderProps renderProps;
 	bool        hasCollision; /// whether it can collide with other boxes
 }
 
@@ -191,8 +192,15 @@ class TileMap : GameObject {
 						break;
 					}
 					case RenderType.Texture: {
+						SDL_Rect* src;
+
+						if (def.renderProps.doCrop) {
+							src  = new SDL_Rect();
+							*src = def.renderProps.crop;
+						}
+					
 						SDL_RenderCopy(
-							parent.renderer, def.render.texture, null, &rect
+							parent.renderer, def.render.texture, src, &rect
 						);
 						break;
 					}

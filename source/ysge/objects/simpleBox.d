@@ -18,6 +18,7 @@ class SimpleBox : GameObject {
 	Physics     physics;
 	RenderType  renderType;
 	RenderValue render;
+	RenderProps renderProps;
 
 	/// initialises with a box and a colour image
 	this(SDL_Rect pbox, SDL_Color colour) {
@@ -229,8 +230,15 @@ class SimpleBox : GameObject {
 				break;
 			}
 			case RenderType.Texture: {
+				SDL_Rect* src;
+
+				if (renderProps.doCrop) {
+					src  = new SDL_Rect();
+					*src = renderProps.crop;
+				}
+			
 				SDL_RenderCopy(
-					parent.renderer, render.texture, null, &screenBox
+					parent.renderer, render.texture, src, &screenBox
 				);
 				break;
 			}
