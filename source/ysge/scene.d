@@ -19,6 +19,8 @@ class Scene {
 	abstract void Update(Project parent);
 	/// run when an event is created
 	abstract void HandleEvent(Project parent, SDL_Event e);
+	/// run after an object is rendered
+	abstract void PostRender(Project parent, GameObject obj);
 
 	/// makes the camera follow an object
 	void CameraFollowObject(SimpleBox obj) {
