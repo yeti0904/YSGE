@@ -98,6 +98,7 @@ class Scene {
 
 		foreach (ref object ; objects) {
 			object.Render(parent);
+			PostRender(parent, object);
 		}
 		
 		foreach (ref element ; ui) {
