@@ -212,7 +212,8 @@ class TileMap : GameObject {
 						}
 					
 						SDL_RenderCopy(
-							parent.renderer, def.render.texture, src, &rect
+							parent.renderer, def.render.texture.texture, src,
+							&rect
 						);
 						break;
 					}

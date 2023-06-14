@@ -28,7 +28,7 @@ class SimpleBox : GameObject {
 	}
 
 	/// initialises with a box and a texture
-	this(SDL_Rect pbox, SDL_Texture* texture) {
+	this(SDL_Rect pbox, Texture texture) {
 		box        = pbox;
 		renderType = RenderType.Texture;
 		render     = RenderValue(texture);
@@ -41,7 +41,7 @@ class SimpleBox : GameObject {
 	}
 
 	/// makes the object render as a texture
-	void SetRenderTexture(SDL_Texture* texture) {
+	void SetRenderTexture(Texture texture) {
 		renderType = RenderType.Texture;
 		render     = RenderValue(texture);
 	}
@@ -238,7 +238,7 @@ class SimpleBox : GameObject {
 				}
 			
 				SDL_RenderCopy(
-					parent.renderer, render.texture, src, &screenBox
+					parent.renderer, render.texture.texture, src, &screenBox
 				);
 				break;
 			}

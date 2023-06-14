@@ -9,9 +9,10 @@ public import bindbc.sdl;
 public import ysge.util;
 public import ysge.scene;
 public import ysge.types;
+public import ysge.uiBase;
+public import ysge.texture;
 public import ysge.gameObject;
 public import ysge.objects.simpleBox;
-public import ysge.uiBase;
 
 /// used when something goes wrong in the project
 class ProjectException : Exception {
@@ -32,6 +33,20 @@ class Project {
 	Vec2!int      logicalRes; /// DON'T MODIFY!!!!
 	Vec2!int      mousePos;
 	ulong         frames; /// how many frames have passed since the game was started
+
+	this() {
+		
+	}
+
+	~this() {
+		if (window) {
+			SDL_DestroyWindow(window);
+		}
+		if (renderer) {
+			SDL_DestroyRenderer(renderer);
+		}
+		SDL_Quit();
+	}
 
 	/// called once at the start
 	abstract void Init();
@@ -185,7 +200,7 @@ class Project {
 	}
 
 	/// loads a texture from a file
-	SDL_Texture* LoadTextureFromFile(string fileName) {
+	Texture LoadTextureFromFile(string fileName) {
 		auto surface = IMG_Load(cast(char*) fileName.toStringz());
 
 		if (surface is null) {
@@ -198,11 +213,11 @@ class Project {
 			throw new ProjectException("Failed to load texture");
 		}
 
-		return texture;
+		return new Texture(texture);
 	}
 
 	/// loads a texture from raw file data
-	SDL_Texture* LoadTextureFromData(ref ubyte[] data) {
+	Texture LoadTextureFromData(ref ubyte[] data) {
 		auto rw      = SDL_RWFromMem(data.ptr, cast(int) data.length);
 		auto surface = IMG_Load_RW(rw, 1);
 		
@@ -216,7 +231,7 @@ class Project {
 			throw new ProjectException("Failed to load texture");
 		}
 
-		return texture;
+		return new Texture(texture);
 	}
 
 	/// runs the game

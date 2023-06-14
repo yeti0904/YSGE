@@ -12,14 +12,14 @@ enum RenderType {
 
 /// a texture or a colour that will be used for rendering this object
 union RenderValue {
-	SDL_Color    colour;
-	SDL_Texture* texture;
+	SDL_Color colour;
+	Texture   texture;
 
 	this(SDL_Color pcolour) {
 		colour = pcolour;
 	}
 
-	this(SDL_Texture* ptexture) {
+	this(Texture ptexture) {
 		texture = ptexture;
 	}
 }
