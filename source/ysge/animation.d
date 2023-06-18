@@ -50,7 +50,7 @@ class AnimationManager {
 		foreach (i, ref process ; processes) {
 			if (process.animation == animation) {
 				processes = processes.remove(i);
-				break;
+				return;
 			}
 		}
 
