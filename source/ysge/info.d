@@ -2,4 +2,4 @@
 module ysge.info;
 
 /// the YSGE version in use
-const string ysgeVersion = "YSGE 1.2.11";
+const string ysgeVersion = "YSGE 1.3.0";

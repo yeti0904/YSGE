@@ -6,12 +6,13 @@ public import ysge.objects.simpleBox;
 
 /// individual scene containing objects
 class Scene {
-	GameObject[] objects;
-	UIElement[]  ui;
-	SDL_Color    bg;
-	Vec2!int     camera;
-	bool         cameraFollowsObject;
-	Vec2!int*    cameraFollow;
+	GameObject[]     objects;
+	UIElement[]      ui;
+	SDL_Color        bg;
+	Vec2!int         camera;
+	bool             cameraFollowsObject;
+	Vec2!int*        cameraFollow;
+	AnimationManager animations;
 
 	/// called when this scene is set as the project's current scene
 	abstract void Init(Project parent);

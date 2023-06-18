@@ -30,6 +30,13 @@ struct RenderProps {
 	SDL_Rect crop; /// the area that will be rendered
 }
 
+/// full render info
+struct RenderInfo {
+	RenderType  type;
+	RenderValue value;
+	RenderProps props;
+}
+
 /// base class for objects in a scene
 class GameObject {
 	abstract void Update(Project parent);

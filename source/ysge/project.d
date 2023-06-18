@@ -11,6 +11,7 @@ public import ysge.scene;
 public import ysge.types;
 public import ysge.uiBase;
 public import ysge.texture;
+public import ysge.animation;
 public import ysge.gameObject;
 public import ysge.objects.simpleBox;
 
@@ -23,16 +24,16 @@ class ProjectException : Exception {
 
 /// main project class used for the game as a whole
 class Project {
-	bool          running; /// while true, update functions are called
-	SDL_Window*   window;
-	SDL_Renderer* renderer;
-	TTF_Font*     font;
-	Scene[]       scenes;
-	Scene         currentScene;
-	bool          usingLogicalRes; /// DON'T MODIFY!!!!
-	Vec2!int      logicalRes; /// DON'T MODIFY!!!!
-	Vec2!int      mousePos;
-	ulong         frames; /// how many frames have passed since the game was started
+	bool             running; /// while true, update functions are called
+	SDL_Window*      window;
+	SDL_Renderer*    renderer;
+	TTF_Font*        font;
+	Scene[]          scenes;
+	Scene            currentScene;
+	bool             usingLogicalRes; /// DON'T MODIFY!!!!
+	Vec2!int         logicalRes; /// DON'T MODIFY!!!!
+	Vec2!int         mousePos;
+	ulong            frames; /// how many frames have passed since the game was started
 
 	this() {
 		
@@ -249,7 +250,8 @@ class Project {
 
 		while (running) {
 			++ frames;
-		
+
+			currentScene.animations.Update(this, currentScene);
 			currentScene.UpdateObjects(this);
 			currentScene.Update(this);
 			currentScene.UpdateCamera(this);

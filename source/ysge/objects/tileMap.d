@@ -14,10 +14,8 @@ struct Tile {
 
 /// tile type definition
 struct TileDef {
-	RenderType  renderType; /// whether it renders as a colour or texture
-	RenderValue render; /// what it uses to render
-	RenderProps renderProps;
-	bool        hasCollision; /// whether it can collide with other boxes
+	RenderInfo render;
+	bool       hasCollision; /// whether it can collide with other boxes
 }
 
 /// tile map object with fast AABB collision
@@ -187,18 +185,18 @@ class TileMap : GameObject {
 					tilePos.x, tilePos.y, tileSize.x, tileSize.y
 				);
 
-				switch (def.renderType) {
+				switch (def.render.type) {
 					case RenderType.Colour: {
-						if (def.render.colour.a == 0) {
+						if (def.render.value.colour.a == 0) {
 							break;
 						}
 						
 						SDL_SetRenderDrawColor(
 							parent.renderer,
-							def.render.colour.r,
-							def.render.colour.g,
-							def.render.colour.b,
-							def.render.colour.a
+							def.render.value.colour.r,
+							def.render.value.colour.g,
+							def.render.value.colour.b,
+							def.render.value.colour.a
 						);
 						SDL_RenderFillRect(parent.renderer, &rect);
 						break;
@@ -206,14 +204,14 @@ class TileMap : GameObject {
 					case RenderType.Texture: {
 						SDL_Rect* src;
 
-						if (def.renderProps.doCrop) {
+						if (def.render.props.doCrop) {
 							src  = new SDL_Rect();
-							*src = def.renderProps.crop;
+							*src = def.render.props.crop;
 						}
 					
 						SDL_RenderCopy(
-							parent.renderer, def.render.texture.texture, src,
-							&rect
+							parent.renderer, def.render.value.texture.texture,
+							src, &rect
 						);
 						break;
 					}

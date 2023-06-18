@@ -13,37 +13,35 @@ struct Physics {
 
 /// box object with AABB collision
 class SimpleBox : GameObject {
-	SDL_Rect    box;
-	bool        physicsOn;
-	Physics     physics;
-	RenderType  renderType;
-	RenderValue render;
-	RenderProps renderProps;
+	SDL_Rect   box;
+	bool       physicsOn;
+	Physics    physics;
+	RenderInfo render;
 
 	/// initialises with a box and a colour image
 	this(SDL_Rect pbox, SDL_Color colour) {
-		box        = pbox;
-		renderType = RenderType.Colour;
-		render     = RenderValue(colour);
+		box          = pbox;
+		render.type  = RenderType.Colour;
+		render.value = RenderValue(colour);
 	}
 
 	/// initialises with a box and a texture
 	this(SDL_Rect pbox, Texture texture) {
-		box        = pbox;
-		renderType = RenderType.Texture;
-		render     = RenderValue(texture);
+		box          = pbox;
+		render.type  = RenderType.Texture;
+		render.value = RenderValue(texture);
 	}
 
 	/// makes the object render as a coloured box
 	void SetRenderColour(SDL_Color colour) {
-		renderType = RenderType.Colour;
-		render     = RenderValue(colour);
+		render.type  = RenderType.Colour;
+		render.value = RenderValue(colour);
 	}
 
 	/// makes the object render as a texture
 	void SetRenderTexture(Texture texture) {
-		renderType = RenderType.Texture;
-		render     = RenderValue(texture);
+		render.type  = RenderType.Texture;
+		render.value = RenderValue(texture);
 	}
 
 	/// updates the object (physics etc)
@@ -217,14 +215,14 @@ class SimpleBox : GameObject {
 		screenBox.x        -= parent.currentScene.camera.x;
 		screenBox.y        -= parent.currentScene.camera.y;
 
-		switch (renderType) {
+		switch (render.type) {
 			case RenderType.Colour: {
 				SDL_SetRenderDrawColor(
 					parent.renderer,
-					render.colour.r,
-					render.colour.g,
-					render.colour.b,
-					render.colour.a
+					render.value.colour.r,
+					render.value.colour.g,
+					render.value.colour.b,
+					render.value.colour.a
 				);
 				SDL_RenderFillRect(parent.renderer, &screenBox);
 				break;
@@ -232,13 +230,14 @@ class SimpleBox : GameObject {
 			case RenderType.Texture: {
 				SDL_Rect* src;
 
-				if (renderProps.doCrop) {
+				if (render.props.doCrop) {
 					src  = new SDL_Rect();
-					*src = renderProps.crop;
+					*src = render.props.crop;
 				}
 			
 				SDL_RenderCopy(
-					parent.renderer, render.texture.texture, src, &screenBox
+					parent.renderer, render.value.texture.texture, src,
+					&screenBox
 				);
 				break;
 			}
