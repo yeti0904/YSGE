@@ -50,8 +50,9 @@ class Scene {
 	* should not be called by the user
 	*/
 	void Setup() {
-		objects = [];
-		ui      = [];
+		objects    = [];
+		ui         = [];
+		animations = new AnimationManager();
 	}
 
 	/**
