@@ -32,6 +32,11 @@ class Text : UIElement {
 		text = newText;
 	}
 
+	/// re-renders the text
+	void Reload(Project parent) {
+		CreateTexture(parent);
+	}
+
 	/// returns the size in pixels of the text
 	Vec2!int GetTextSize(Project project) {
 		Vec2!int ret;
