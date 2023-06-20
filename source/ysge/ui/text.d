@@ -34,6 +34,7 @@ class Text : UIElement {
 
 	/// re-renders the text
 	void Reload(Project parent) {
+		texture = null;
 		CreateTexture(parent);
 	}
 
